@@ -1,0 +1,506 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TECH</title>
+    <style>
+        :root {
+            --bg1: #f0f7ff;
+            --bg2: #fffdf7;
+            --panel: rgba(255, 255, 255, 0.94);
+            --border: #d9e5f2;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --folder: #0f766e;
+            --file: #334155;
+            --accent: #1d4ed8;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(59, 130, 246, 0.12), transparent 32%),
+                linear-gradient(135deg, var(--bg1), var(--bg2));
+            padding: 24px;
+        }
+
+        .shell {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+        }
+
+        h1 {
+            margin: 0 0 6px;
+            font-size: 30px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            margin: 0 0 18px;
+            color: var(--muted);
+        }
+
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .nav-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .nav-link:hover,
+        .entry-link:hover {
+            text-decoration: underline;
+        }
+
+        .list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .entry {
+            display: grid;
+            grid-template-columns: 64px 1fr;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            align-items: start;
+        }
+
+        .kind {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            padding-top: 3px;
+        }
+
+        .kind.dir { color: var(--folder); }
+        .kind.file { color: var(--file); }
+
+        .entry-link {
+            color: var(--text);
+            text-decoration: none;
+            word-break: break-word;
+        }
+
+        .empty {
+            padding: 16px 0 4px;
+            color: var(--muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <div class="panel">
+            <h1>TECH</h1>
+            <p class="subtitle">TECH</p>
+            <div class="nav">
+                <a class="nav-link" href="../">Library Home</a>
+                <a class="nav-link" href="./../">Parent Folder</a>
+            </div>
+            <ul class="list" id="directory-list"></ul>
+        </div>
+    </div>
+    <script>
+        const entries = [
+    {
+        "name":  "ADVANCED DATA MINING",
+        "href":  "ADVANCED%20DATA%20MINING/",
+        "type":  "dir"
+    },
+    {
+        "name":  "AGILE SCRUM",
+        "href":  "AGILE%20SCRUM/",
+        "type":  "dir"
+    },
+    {
+        "name":  "AJAX",
+        "href":  "AJAX/",
+        "type":  "dir"
+    },
+    {
+        "name":  "ANDROID",
+        "href":  "ANDROID/",
+        "type":  "dir"
+    },
+    {
+        "name":  "ARTIFICIAL INTELLIGENCE",
+        "href":  "ARTIFICIAL%20INTELLIGENCE/",
+        "type":  "dir"
+    },
+    {
+        "name":  "BIG DATA ANALYSIS",
+        "href":  "BIG%20DATA%20ANALYSIS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "BIOINFOMATICS",
+        "href":  "BIOINFOMATICS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "CI CD",
+        "href":  "CI%20CD/",
+        "type":  "dir"
+    },
+    {
+        "name":  "CLEAN ARCHITECTURE",
+        "href":  "CLEAN%20ARCHITECTURE/",
+        "type":  "dir"
+    },
+    {
+        "name":  "CLOUD COMPUTING",
+        "href":  "CLOUD%20COMPUTING/",
+        "type":  "dir"
+    },
+    {
+        "name":  "COMPETITIVE PROGRAMMING",
+        "href":  "COMPETITIVE%20PROGRAMMING/",
+        "type":  "dir"
+    },
+    {
+        "name":  "COMPILER DESIGN",
+        "href":  "COMPILER%20DESIGN/",
+        "type":  "dir"
+    },
+    {
+        "name":  "COMPLEX VARIABLE ANALYSIS",
+        "href":  "COMPLEX%20VARIABLE%20ANALYSIS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "COMPUTATIONAL FINANCE",
+        "href":  "COMPUTATIONAL%20FINANCE/",
+        "type":  "dir"
+    },
+    {
+        "name":  "COMPUTER ARCHITECTURE",
+        "href":  "COMPUTER%20ARCHITECTURE/",
+        "type":  "dir"
+    },
+    {
+        "name":  "COMPUTER GRAPHICS",
+        "href":  "COMPUTER%20GRAPHICS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "COMPUTER NETWORKING",
+        "href":  "COMPUTER%20NETWORKING/",
+        "type":  "dir"
+    },
+    {
+        "name":  "COMPUTER ORGANIZATION",
+        "href":  "COMPUTER%20ORGANIZATION/",
+        "type":  "dir"
+    },
+    {
+        "name":  "COMPUTER VISION",
+        "href":  "COMPUTER%20VISION/",
+        "type":  "dir"
+    },
+    {
+        "name":  "CRYPTOGRAPHY AND NETWORK SECURITY",
+        "href":  "CRYPTOGRAPHY%20AND%20NETWORK%20SECURITY/",
+        "type":  "dir"
+    },
+    {
+        "name":  "CYBER SECURITY",
+        "href":  "CYBER%20SECURITY/",
+        "type":  "dir"
+    },
+    {
+        "name":  "DATA ANALYTICS",
+        "href":  "DATA%20ANALYTICS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "DATA STRUCTURE",
+        "href":  "DATA%20STRUCTURE/",
+        "type":  "dir"
+    },
+    {
+        "name":  "DATA STRUCTURES AND ALGORITHMS",
+        "href":  "DATA%20STRUCTURES%20AND%20ALGORITHMS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "DATA WAREHOUSING",
+        "href":  "DATA%20WAREHOUSING/",
+        "type":  "dir"
+    },
+    {
+        "name":  "DATABASE MANAGEMENT SYSTEM",
+        "href":  "DATABASE%20MANAGEMENT%20SYSTEM/",
+        "type":  "dir"
+    },
+    {
+        "name":  "DEEPFAKE",
+        "href":  "DEEPFAKE/",
+        "type":  "dir"
+    },
+    {
+        "name":  "DEVOPS",
+        "href":  "DEVOPS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "DIGITAL SIGNAL PROCESSING",
+        "href":  "DIGITAL%20SIGNAL%20PROCESSING/",
+        "type":  "dir"
+    },
+    {
+        "name":  "DISTRIBUTED DATABASE",
+        "href":  "DISTRIBUTED%20DATABASE/",
+        "type":  "dir"
+    },
+    {
+        "name":  "DOCKER",
+        "href":  "DOCKER/",
+        "type":  "dir"
+    },
+    {
+        "name":  "DOMAIN-DRIVEN DESIGN",
+        "href":  "DOMAIN-DRIVEN%20DESIGN/",
+        "type":  "dir"
+    },
+    {
+        "name":  "DPA",
+        "href":  "DPA/",
+        "type":  "dir"
+    },
+    {
+        "name":  "E-COMMERCE AND ERP",
+        "href":  "E-COMMERCE%20AND%20ERP/",
+        "type":  "dir"
+    },
+    {
+        "name":  "ELECTRONICS",
+        "href":  "ELECTRONICS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "EMBEDDED SYSTEMS",
+        "href":  "EMBEDDED%20SYSTEMS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "ENGLISH",
+        "href":  "ENGLISH/",
+        "type":  "dir"
+    },
+    {
+        "name":  "EVENT-DRIVEN ARCHITECTURE",
+        "href":  "EVENT-DRIVEN%20ARCHITECTURE/",
+        "type":  "dir"
+    },
+    {
+        "name":  "FPGA DESIGN",
+        "href":  "FPGA%20DESIGN/",
+        "type":  "dir"
+    },
+    {
+        "name":  "GAME DEVELOPMENT",
+        "href":  "GAME%20DEVELOPMENT/",
+        "type":  "dir"
+    },
+    {
+        "name":  "GIS",
+        "href":  "GIS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "GRAPH NEURAL NETWORKS",
+        "href":  "GRAPH%20NEURAL%20NETWORKS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "IMAGE PROCESSING",
+        "href":  "IMAGE%20PROCESSING/",
+        "type":  "dir"
+    },
+    {
+        "name":  "INFORMATION THEORY, CODING AND CRYPTOGRAPHY",
+        "href":  "INFORMATION%20THEORY%2C%20CODING%20AND%20CRYPTOGRAPHY/",
+        "type":  "dir"
+    },
+    {
+        "name":  "INTERNET OF THINGS",
+        "href":  "INTERNET%20OF%20THINGS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "KNOWLEDGE REPRESENTATION",
+        "href":  "KNOWLEDGE%20REPRESENTATION/",
+        "type":  "dir"
+    },
+    {
+        "name":  "KUBERNETES",
+        "href":  "KUBERNETES/",
+        "type":  "dir"
+    },
+    {
+        "name":  "MATH",
+        "href":  "MATH/",
+        "type":  "dir"
+    },
+    {
+        "name":  "MICRO-ELECTRONICS AND VLSI DESIGN",
+        "href":  "MICRO-ELECTRONICS%20AND%20VLSI%20DESIGN/",
+        "type":  "dir"
+    },
+    {
+        "name":  "MICROSERVICES",
+        "href":  "MICROSERVICES/",
+        "type":  "dir"
+    },
+    {
+        "name":  "MOBILE COMPUTING",
+        "href":  "MOBILE%20COMPUTING/",
+        "type":  "dir"
+    },
+    {
+        "name":  "MULTIMEDIA SYSTEMS",
+        "href":  "MULTIMEDIA%20SYSTEMS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "NETWORKING",
+        "href":  "NETWORKING/",
+        "type":  "dir"
+    },
+    {
+        "name":  "OPERATING SYSTEM",
+        "href":  "OPERATING%20SYSTEM/",
+        "type":  "dir"
+    },
+    {
+        "name":  "OPERATION RESEARCH",
+        "href":  "OPERATION%20RESEARCH/",
+        "type":  "dir"
+    },
+    {
+        "name":  "OTHERS",
+        "href":  "OTHERS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "PHYSICS",
+        "href":  "PHYSICS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "PROGRAMMING LANGUAGE",
+        "href":  "PROGRAMMING%20LANGUAGE/",
+        "type":  "dir"
+    },
+    {
+        "name":  "QUANTAM COMPUTING",
+        "href":  "QUANTAM%20COMPUTING/",
+        "type":  "dir"
+    },
+    {
+        "name":  "RESEARCH METHODOLOGY",
+        "href":  "RESEARCH%20METHODOLOGY/",
+        "type":  "dir"
+    },
+    {
+        "name":  "ROBOTICS",
+        "href":  "ROBOTICS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "SIGNALS AND NETWORKS",
+        "href":  "SIGNALS%20AND%20NETWORKS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "SIGNALS AND SYSTEMS",
+        "href":  "SIGNALS%20AND%20SYSTEMS/",
+        "type":  "dir"
+    },
+    {
+        "name":  "SOFT COMPUTING",
+        "href":  "SOFT%20COMPUTING/",
+        "type":  "dir"
+    },
+    {
+        "name":  "SOFT SKILL AND INTERPERSONAL COMMUNICATION",
+        "href":  "SOFT%20SKILL%20AND%20INTERPERSONAL%20COMMUNICATION/",
+        "type":  "dir"
+    },
+    {
+        "name":  "SOFTWARE ENGINNERING",
+        "href":  "SOFTWARE%20ENGINNERING/",
+        "type":  "dir"
+    },
+    {
+        "name":  "TESTING",
+        "href":  "TESTING/",
+        "type":  "dir"
+    },
+    {
+        "name":  "THEORY OF COMPUTATION",
+        "href":  "THEORY%20OF%20COMPUTATION/",
+        "type":  "dir"
+    },
+    {
+        "name":  "THEORY OF COMPUTER SCIENCE",
+        "href":  "THEORY%20OF%20COMPUTER%20SCIENCE/",
+        "type":  "dir"
+    },
+    {
+        "name":  "WEB AND INTERNET TECHNOLOGY",
+        "href":  "WEB%20AND%20INTERNET%20TECHNOLOGY/",
+        "type":  "dir"
+    }
+];
+        const list = document.getElementById("directory-list");
+
+        if (!entries.length) {
+            const empty = document.createElement("li");
+            empty.className = "empty";
+            empty.textContent = "This folder is empty.";
+            list.appendChild(empty);
+        } else {
+            for (const entry of entries) {
+                const item = document.createElement("li");
+                item.className = "entry";
+
+                const kind = document.createElement("div");
+                kind.className = kind ;
+                kind.textContent = entry.type === "dir" ? "[DIR]" : "[FILE]";
+
+                const link = document.createElement("a");
+                link.className = "entry-link";
+                link.href = entry.href;
+                link.textContent = entry.name;
+
+                item.appendChild(kind);
+                item.appendChild(link);
+                list.appendChild(item);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXPRESS</title>
+    <style>
+        :root {
+            --bg1: #f0f7ff;
+            --bg2: #fffdf7;
+            --panel: rgba(255, 255, 255, 0.94);
+            --border: #d9e5f2;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --folder: #0f766e;
+            --file: #334155;
+            --accent: #1d4ed8;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(59, 130, 246, 0.12), transparent 32%),
+                linear-gradient(135deg, var(--bg1), var(--bg2));
+            padding: 24px;
+        }
+
+        .shell {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+        }
+
+        h1 {
+            margin: 0 0 6px;
+            font-size: 30px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            margin: 0 0 18px;
+            color: var(--muted);
+        }
+
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .nav-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .nav-link:hover,
+        .entry-link:hover {
+            text-decoration: underline;
+        }
+
+        .list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .entry {
+            display: grid;
+            grid-template-columns: 64px 1fr;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            align-items: start;
+        }
+
+        .kind {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            padding-top: 3px;
+        }
+
+        .kind.dir { color: var(--folder); }
+        .kind.file { color: var(--file); }
+
+        .entry-link {
+            color: var(--text);
+            text-decoration: none;
+            word-break: break-word;
+        }
+
+        .empty {
+            padding: 16px 0 4px;
+            color: var(--muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <div class="panel">
+            <h1>EXPRESS</h1>
+            <p class="subtitle">TECH / PROGRAMMING LANGUAGE / JAVASCRIPT / EXPRESS</p>
+            <div class="nav">
+                <a class="nav-link" href="../../../../">Library Home</a>
+                <a class="nav-link" href="./../">Parent Folder</a>
+            </div>
+            <ul class="list" id="directory-list"></ul>
+        </div>
+    </div>
+    <script>
+        const entries = {
+    "name":  "Express.js Handbook.pdf",
+    "href":  "Express.js%20Handbook.pdf",
+    "type":  "file"
+};
+        const list = document.getElementById("directory-list");
+
+        if (!entries.length) {
+            const empty = document.createElement("li");
+            empty.className = "empty";
+            empty.textContent = "This folder is empty.";
+            list.appendChild(empty);
+        } else {
+            for (const entry of entries) {
+                const item = document.createElement("li");
+                item.className = "entry";
+
+                const kind = document.createElement("div");
+                kind.className = kind ;
+                kind.textContent = entry.type === "dir" ? "[DIR]" : "[FILE]";
+
+                const link = document.createElement("a");
+                link.className = "entry-link";
+                link.href = entry.href;
+                link.textContent = entry.name;
+
+                item.appendChild(kind);
+                item.appendChild(link);
+                list.appendChild(item);
+            }
+        }
+    </script>
+</body>
+</html>

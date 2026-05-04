@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHYSICS</title>
+    <style>
+        :root {
+            --bg1: #f0f7ff;
+            --bg2: #fffdf7;
+            --panel: rgba(255, 255, 255, 0.94);
+            --border: #d9e5f2;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --folder: #0f766e;
+            --file: #334155;
+            --accent: #1d4ed8;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(59, 130, 246, 0.12), transparent 32%),
+                linear-gradient(135deg, var(--bg1), var(--bg2));
+            padding: 24px;
+        }
+
+        .shell {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+        }
+
+        h1 {
+            margin: 0 0 6px;
+            font-size: 30px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            margin: 0 0 18px;
+            color: var(--muted);
+        }
+
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .nav-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .nav-link:hover,
+        .entry-link:hover {
+            text-decoration: underline;
+        }
+
+        .list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .entry {
+            display: grid;
+            grid-template-columns: 64px 1fr;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            align-items: start;
+        }
+
+        .kind {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            padding-top: 3px;
+        }
+
+        .kind.dir { color: var(--folder); }
+        .kind.file { color: var(--file); }
+
+        .entry-link {
+            color: var(--text);
+            text-decoration: none;
+            word-break: break-word;
+        }
+
+        .empty {
+            padding: 16px 0 4px;
+            color: var(--muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <div class="panel">
+            <h1>PHYSICS</h1>
+            <p class="subtitle">TECH / PHYSICS</p>
+            <div class="nav">
+                <a class="nav-link" href="../../">Library Home</a>
+                <a class="nav-link" href="./../">Parent Folder</a>
+            </div>
+            <ul class="list" id="directory-list"></ul>
+        </div>
+    </div>
+    <script>
+        const entries = [
+    {
+        "name":  "[SOLUTIONS] Halliday, Resnick - Fundamentals of Physics Extended [10th Edition].pdf",
+        "href":  "%5BSOLUTIONS%5D%20Halliday%2C%20Resnick%20-%20Fundamentals%20of%20Physics%20Extended%20%5B10th%20Edition%5D.pdf",
+        "type":  "file"
+    },
+    {
+        "name":  "459974_1_En_Print.indd.pdf",
+        "href":  "459974_1_En_Print.indd.pdf",
+        "type":  "file"
+    },
+    {
+        "name":  "DjVu Document.pdf",
+        "href":  "DjVu%20Document.pdf",
+        "type":  "file"
+    },
+    {
+        "name":  "Edmund J. and Louise W. Kahn Professor for Faculty Excellence.pdf",
+        "href":  "Edmund%20J.%20and%20Louise%20W.%20Kahn%20Professor%20for%20Faculty%20Excellence.pdf",
+        "type":  "file"
+    },
+    {
+        "name":  "Full page photo.pdf",
+        "href":  "Full%20page%20photo.pdf",
+        "type":  "file"
+    },
+    {
+        "name":  "Fundamentals of Physics Extended, 10th Edition.pdf",
+        "href":  "Fundamentals%20of%20Physics%20Extended%2C%2010th%20Edition.pdf",
+        "type":  "file"
+    },
+    {
+        "name":  "Physics for Scientists \u0026 Engineers \u0026 Modern Physics, 9th Ed.pdf",
+        "href":  "Physics%20for%20Scientists%20%26%20Engineers%20%26%20Modern%20Physics%2C%209th%20Ed.pdf",
+        "type":  "file"
+    },
+    {
+        "name":  "Schaum\u0027s Outline of College Physics, Twelfth Edition (Schaum\u0027s Outlines).pdf",
+        "href":  "Schaum\u0027s%20Outline%20of%20College%20Physics%2C%20Twelfth%20Edition%20(Schaum\u0027s%20Outlines).pdf",
+        "type":  "file"
+    },
+    {
+        "name":  "Schaum\u0027s Outline of Theory and Problems of College Physics.pdf",
+        "href":  "Schaum\u0027s%20Outline%20of%20Theory%20and%20Problems%20of%20College%20Physics.pdf",
+        "type":  "file"
+    },
+    {
+        "name":  "University Physics Volume 1.pdf",
+        "href":  "University%20Physics%20Volume%201.pdf",
+        "type":  "file"
+    }
+];
+        const list = document.getElementById("directory-list");
+
+        if (!entries.length) {
+            const empty = document.createElement("li");
+            empty.className = "empty";
+            empty.textContent = "This folder is empty.";
+            list.appendChild(empty);
+        } else {
+            for (const entry of entries) {
+                const item = document.createElement("li");
+                item.className = "entry";
+
+                const kind = document.createElement("div");
+                kind.className = kind ;
+                kind.textContent = entry.type === "dir" ? "[DIR]" : "[FILE]";
+
+                const link = document.createElement("a");
+                link.className = "entry-link";
+                link.href = entry.href;
+                link.textContent = entry.name;
+
+                item.appendChild(kind);
+                item.appendChild(link);
+                list.appendChild(item);
+            }
+        }
+    </script>
+</body>
+</html>
