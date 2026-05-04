@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -218,12 +218,22 @@
                 item.className = "entry";
 
                 const kind = document.createElement("div");
-                kind.className = kind ;
+                kind.className = "kind " + entry.type;
                 kind.textContent = entry.type === "dir" ? "[DIR]" : "[FILE]";
 
                 const link = document.createElement("a");
                 link.className = "entry-link";
-                link.href = entry.href;
+                if (entry.type === "file" && entry.href.toLowerCase().endsWith(".pdf")) {
+                    const pdfPath = new URL(entry.href, window.location.href).pathname;
+                    const repositoryPath = pdfPath.includes("/ComputerBook/")
+                        ? pdfPath.slice(pdfPath.indexOf("/ComputerBook/") + "/ComputerBook/".length)
+                        : pdfPath.replace(/^.*?\/books\//i, "");
+                    link.href = `https://github.com/greyt1563/ComputerBook/raw/main/${repositoryPath}`;
+                    link.target = "_blank";
+                    link.rel = "noopener";
+                } else {
+                    link.href = entry.href;
+                }
                 link.textContent = entry.name;
 
                 item.appendChild(kind);
