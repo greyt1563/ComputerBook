@@ -1,41 +1,53 @@
-# Books Library for GitHub Pages
+# ComputerBook
 
-This repository contains a static library of PDF books organized by folders.
+A browsable digital library of computer science, technology, mathematics, and academic reference books, organized as a static GitHub Pages site.
 
-GitHub Pages does not support PHP, so the original `index.php` directory listing files cannot run on `github.io`. To make the library browsable online, this repo uses generated `index.html` files inside each folder.
+## Live Library
 
-## How it works
+Visit the library here:
 
-- Each folder gets an `index.html` file.
-- That file lists the subfolders and files inside that folder.
-- PDF files open directly from the GitHub Pages site.
+[https://greyt1563.github.io/ComputerBook/](https://greyt1563.github.io/ComputerBook/)
 
-## Publish on GitHub Pages
+## Highlights
 
-1. Create a GitHub repository.
-2. Upload all files and folders from this directory.
-3. In the GitHub repository, open `Settings` > `Pages`.
-4. Set the source to deploy from the main branch root.
-5. Save and wait for the site to publish.
+- Organized collections for CBSE, ICSE, WBCHSE, technical subjects, and other references.
+- Static folder listings generated as `index.html` files for GitHub Pages.
+- Large PDF files are stored with Git LFS and opened through GitHub raw file links.
+- GitHub Actions automatically publishes the site after changes are pushed to `main`.
 
-Your site URL will look like:
+## Repository Structure
 
 ```text
-https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/
+ComputerBook/
+|-- CBSE/
+|-- ICSE/
+|-- OTHERS/
+|-- TECH/
+|-- WBCHSE/
+|-- .github/workflows/
+|-- 404.html
+|-- index.html
+`-- README.md
 ```
 
-## Update the folder listings
+## How Publishing Works
 
-If you add, remove, or rename books or folders, regenerate the HTML index files:
+GitHub Pages serves the generated HTML pages, while PDF links redirect to GitHub's raw/LFS file URLs. This avoids the GitHub Pages limitation where LFS files are otherwise published as pointer files instead of real PDFs.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\generate-gh-pages-indexes.ps1
+The deployment workflow is defined in:
+
+```text
+.github/workflows/static.yml
 ```
 
-Then commit the updated `index.html` files.
+## Maintenance
+
+When adding, removing, or renaming folders or books, regenerate the static folder listings and commit the updated files.
+
+Keep temporary files such as `desktop.ini`, incomplete downloads, and local build output out of the repository.
 
 ## Notes
 
-- `index.php` files are kept only as old local/server compatibility files.
-- GitHub Pages will serve the generated `index.html` files, not the PHP files.
+- `index.php` files are retained only for old local/server compatibility.
+- GitHub Pages uses `index.html`, not PHP.
 - `.nojekyll` is included so GitHub Pages serves files directly without Jekyll processing.
